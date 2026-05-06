@@ -1,0 +1,177 @@
+import tensorflow as tf 
+import matplotlib.pyplot as plt 
+ 
+# 1. Load Data 
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data() 
+ 
+# 2. Preprocess 
+x_train = x_train / 255.0 
+x_test = x_test / 255.0 
+ 
+x_train = x_train.reshape(-1,28,28,1) 
+x_test = x_test.reshape(-1,28,28,1) 
+ 
+# 3. Build SIMPLE MODEL 
+model1 = tf.keras.Sequential([ 
+    tf.keras.layers.Conv2D(32,(3,3),activation='relu',input_shape=(28,28,1)), 
+    tf.keras.layers.MaxPooling2D(2,2), 
+    tf.keras.layers.Flatten(), 
+    tf.keras.layers.Dense(64,activation='relu'), 
+    tf.keras.layers.Dense(10,activation='softmax') 
+]) 
+ 
+model1.compile(optimizer='adam', 
+              loss='sparse_categorical_crossentropy', 
+              metrics=['accuracy']) 
+ 
+# 4. Train Base Model 
+history1 = model1.fit(x_train, y_train, epochs=5, validation_data=(x_test,y_test)) 
+ 
+# 5. Build IMPROVED MODEL (with Dropout) 
+model2 = tf.keras.Sequential([ 
+    tf.keras.layers.Conv2D(32,(3,3),activation='relu',input_shape=(28,28,1)), 
+    tf.keras.layers.MaxPooling2D(2,2), 
+    tf.keras.layers.Flatten(), 
+    tf.keras.layers.Dense(64,activation='relu'), 
+    tf.keras.layers.Dropout(0.3),   # tuning 
+    tf.keras.layers.Dense(10,activation='softmax') 
+]) 
+model2.compile(optimizer='adam', 
+              loss='sparse_categorical_crossentropy', 
+              metrics=['accuracy']) 
+ 
+# 6. Train Improved Model 
+history2 = model2.fit(x_train, y_train, epochs=5, validation_data=(x_test,y_test)) 
+ 
+ 
+# 7. Plot Accuracy Graph 
+plt.plot(history1.history['accuracy'], label='Base Train') 
+plt.plot(history1.history['val_accuracy'], label='Base Test') 
+plt.plot(history2.history['accuracy'], label='Improved Train') 
+plt.plot(history2.history['val_accuracy'], label='Improved Test') 
+plt.title("Accuracy Comparison") 
+plt.xlabel("Epochs") 
+plt.ylabel("Accuracy") 
+plt.legend() 
+plt.show() 
+# 8. Plot Loss Graph 
+plt.plot(history1.history['loss'], label='Base Train Loss') 
+plt.plot(history1.history['val_loss'], label='Base Test Loss') 
+plt.plot(history2.history['loss'], label='Improved Train Loss') 
+plt.plot(history2.history['val_loss'], label='Improved Test Loss') 
+plt.title("Loss Comparison") 
+plt.xlabel("Epochs") 
+plt.ylabel("Loss") 
+plt.legend() 
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+# import tensorflow as tf
+# Imports TensorFlow library for deep learning.
+# import matplotlib.pyplot as plt
+# Imports Matplotlib for drawing graphs.
+# (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+# Loads MNIST dataset (handwritten digits 0–9).
+# x_train, x_test = images
+# y_train, y_test = correct answers (labels)
+# x_train = x_train / 255.0
+# x_test = x_test / 255.0
+# Scales pixel values from 0–255 to 0–1.
+# Makes learning easier and faster.
+# x_train = x_train.reshape(-1,28,28,1)
+# x_test = x_test.reshape(-1,28,28,1)
+# Changes shape to fit CNN input format.
+# Each image becomes 28×28 with 1 color channel (grayscale).
+# MODEL 1 (Base Model)
+# model1 = tf.keras.Sequential([
+# Starts building first CNN model step by step.
+# tf.keras.layers.Conv2D(32,(3,3),activation='relu',input_shape=(28,28,1)),
+# Convolution layer:
+# 32 filters detect patterns (edges, shapes)
+# 3×3 filter size
+# ReLU removes negative values
+# Input is 28×28×1 image
+# tf.keras.layers.MaxPooling2D(2,2),
+# Reduces image size by taking max value in 2×2 blocks.
+# Keeps important features only.
+# tf.keras.layers.Flatten(),
+# Converts image matrix into a single line (1D array).
+# tf.keras.layers.Dense(64,activation='relu'),
+# Fully connected layer with 64 neurons.
+# Learns complex patterns.
+# tf.keras.layers.Dense(10,activation='softmax')
+# Output layer for 10 digits (0–9).
+# Softmax gives probability for each digit.
+# model1.compile(optimizer='adam',
+#               loss='sparse_categorical_crossentropy',
+#               metrics=['accuracy'])
+# Sets training rules:
+# Adam optimizer = smart learning method
+# Loss function = measures error
+# Accuracy = performance check
+# history1 = model1.fit(x_train, y_train, epochs=5, validation_data=(x_test,y_test))
+# Trains model for 5 rounds (epochs).
+# Also checks performance on test data.
+# MODEL 2 (Improved Model)
+# model2 = tf.keras.Sequential([
+# Builds second improved model.
+# tf.keras.layers.Dropout(0.3),
+# Randomly removes 30% neurons during training.
+# Prevents overfitting (memorizing instead of learning).
+# model2.compile(optimizer='adam',
+#               loss='sparse_categorical_crossentropy',
+#               metrics=['accuracy'])
+# Same setup as model1.
+# history2 = model2.fit(x_train, y_train, epochs=5, validation_data=(x_test,y_test))
+# Trains improved model.
+# GRAPH PLOTTING
+# plt.plot(history1.history['accuracy'], label='Base Train')
+# Shows training accuracy of base model.
+# plt.plot(history1.history['val_accuracy'], label='Base Test')
+# Shows test accuracy of base model.
+# plt.plot(history2.history['accuracy'], label='Improved Train')
+# Shows training accuracy of improved model.
+# plt.plot(history2.history['val_accuracy'], label='Improved Test')
+# Shows test accuracy of improved model.
+# plt.title("Accuracy Comparison")
+# Sets graph title.
+# plt.xlabel("Epochs")
+# plt.ylabel("Accuracy")
+# Labels X-axis and Y-axis.
+# plt.legend()
+# Shows labels for lines.
+# plt.show()
+# Displays accuracy graph.
+# LOSS GRAPH (same idea)
+# plt.plot(history1.history['loss'], label='Base Train Loss')
+# Training loss of base model.
+# plt.plot(history1.history['val_loss'], label='Base Test Loss')
+# Test loss of base model.
+# plt.plot(history2.history['loss'], label='Improved Train Loss')
+# Training loss of improved model.
+# plt.plot(history2.history['val_loss'], label='Improved Test Loss')
+# Test loss of improved model.
+# plt.title("Loss Comparison")
+# plt.xlabel("Epochs")
+# plt.ylabel("Loss")
+# plt.legend()
+# plt.show()
+# Displays loss comparison graph.
