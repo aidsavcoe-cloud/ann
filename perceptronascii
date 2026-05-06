@@ -1,0 +1,180 @@
+import numpy as np
+import numpy.random as ar
+
+def inpt():
+    b = []
+    for i in range(10):
+        asc = ord(str(i))
+        bin_str = format(asc, '07b')
+        print(i, "-->", asc, "-->", bin_str)
+        d = [int(bit) for bit in bin_str]
+        b.append(d)
+    return b
+
+x = inpt()
+print("X =", x)
+
+w = ar.rand(7)
+print("W =", w)
+
+t = [1,0,1,0,1,0,1,0,1,0]
+
+b = 0
+alpha = 0.1
+
+for epoch in range(50):
+    print("epoch =", epoch)
+    e = 0
+    for i in range(len(x)):
+        netw = np.dot(w, x[i]) + b
+        yin = 1 if netw >= 0 else 0
+        error = t[i] - yin
+        print("netw =", netw, "yin =", yin, "error =", error)
+        if error != 0:
+            e = e + 1
+            w = w + (alpha * error * np.array(x[i]))
+            b = b + (alpha * error)
+    if e == 0:
+        break
+
+print("final W =", w)
+print("final b =", b)
+
+while True:
+    a = int(input("Enter a number: "))
+    if a < 0 or a > 9:
+        print("Enter only single digit (0-9)")
+        continue
+
+    asc = ord(str(a))
+    bin_str = format(asc, '07b')
+    d = [int(bit) for bit in bin_str]
+
+    netw = np.dot(w, d) + b
+    yin = 1 if netw >= 0 else 0
+
+    print("Result:", "Even" if yin == 1 else "Odd")
+
+    choice = input("Do you want to continue? (y/n): ")
+    if choice != 'y' and choice != 'Y':
+        break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# #import numpy as np
+# #Imports NumPy for vector operations like dot product.
+# #import numpy.random as ar
+# Imports random module to generate random weights.
+# 🔹 Input Function
+# def inpt():
+# Defines a function to generate input data.
+#     b = []
+# Creates empty list to store binary inputs.
+#     for i in range(10):
+# Loops through digits 0 to 9.
+#         asc = ord(str(i))
+# Converts digit → character → ASCII value.
+#         bin_str = format(asc, '07b')
+# Converts ASCII value into 7-bit binary.
+#         print(i, "-->", asc, "-->", bin_str)
+# Displays digit, ASCII value, and binary form.
+#         d = [int(bit) for bit in bin_str]
+# Converts binary string into list of integers.
+#         b.append(d)
+# Stores binary input.
+#     return b
+# Returns all inputs.
+# x = inpt()
+# Calls function to generate input data.
+# print("X =", x)
+# Prints input dataset.
+# 🔹 Weight Initialization
+# w = ar.rand(7)
+# Initializes 7 random weights.
+# print("W =", w)
+# Displays initial weights.
+# 🔹 Target Output
+# t = [1,0,1,0,1,0,1,0,1,0]
+# Defines targets → Even = 1, Odd = 0.
+# b = 0
+# Initializes bias.
+# alpha = 0.1
+# Sets learning rate.
+# 🔹 Training Phase
+# for epoch in range(50):
+# Runs training for multiple iterations.
+#     print("epoch =", epoch)
+# Displays current epoch.
+#     e = 0
+# Counts number of errors in epoch.
+#     for i in range(len(x)):
+# Loops through all inputs.
+#         netw = np.dot(w, x[i]) + b
+# Computes weighted sum + bias.
+#         yin = 1 if netw >= 0 else 0
+# Applies step activation function.
+#         error = t[i] - yin
+# Calculates prediction error.
+#         print("netw =", netw, "yin =", yin, "error =", error)
+# Displays intermediate values.
+#         if error != 0:
+# Updates only if prediction is wrong.
+#             e = e + 1
+# Increments error count.
+#             w = w + (alpha * error * np.array(x[i]))
+# Updates weights using perceptron rule.
+#             b = b + (alpha * error)
+# Updates bias.
+#     if e == 0:
+#         break
+# Stops training early if no errors (model learned perfectly).
+# 🔹 Final Output
+# print("final W =", w)
+# Prints trained weights.
+# print("final b =", b)
+# Prints trained bias.
+# 🔹 Testing Phase (User Input)
+# while True:
+# Runs loop for continuous user input.
+#     a = int(input("Enter a number: "))
+# Takes number from user.
+#     if a < 0 or a > 9:
+# Checks if input is valid digit.
+#         print("Enter only single digit (0-9)")
+#         continue
+# Shows error and asks again.
+#     asc = ord(str(a))
+# Converts input to ASCII.
+#     bin_str = format(asc, '07b')
+# Converts to binary.
+#     d = [int(bit) for bit in bin_str]
+# Converts to list form.
+#     netw = np.dot(w, d) + b
+# Computes output using trained model.
+#     yin = 1 if netw >= 0 else 0
+# Predicts class.
+#     print("Result:", "Even" if yin == 1 else "Odd")
+# Displays result (Even/Odd).
+#     choice = input("Do you want to continue? (y/n): ")
+# Asks user to continue.
+#     if choice != 'y' and choice != 'Y':
+#         break
