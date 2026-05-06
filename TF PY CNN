@@ -1,0 +1,166 @@
+import tensorflow as tf
+
+# 1. Load Dataset
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+# 2. Data Preprocessing
+x_train = x_train.reshape(-1, 28, 28, 1) / 255.0
+x_test = x_test.reshape(-1, 28, 28, 1) / 255.0
+
+# 3. Build CNN Model
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, 3, activation='relu', input_shape=(28,28,1)),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.Conv2D(64, 3, activation='relu'),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+# 4. Compile Model
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# 5. Train Model
+history = model.fit(
+    x_train, y_train,
+    epochs=1,
+    validation_data=(x_test, y_test),
+    verbose=0
+)
+
+# 6. Evaluate Model
+test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
+
+# 7. Output Results
+print("\n" + "="*40)
+print("TRAINING SUMMARY")
+print("="*40)
+
+print(f"Training Accuracy  : {history.history['accuracy'][-1]:.4f}")
+print(f"Training Loss      : {history.history['loss'][-1]:.4f}")
+print(f"Validation Accuracy: {history.history['val_accuracy'][-1]:.4f}")
+print(f"Validation Loss    : {history.history['val_loss'][-1]:.4f}")
+
+print("\n" + "="*40)
+print("TEST RESULTS")
+print("="*40)
+
+print(f"Test Accuracy : {test_acc:.4f}")
+print(f"Test Loss     : {test_loss:.4f}")
+
+#To show images from dataset
+import matplotlib.pyplot as plt
+for i in range(5):
+    plt.subplot(1,5,i+1)
+    plt.imshow(x_train[i].reshape(28,28), cmap='gray')
+    plt.title(y_train[i])
+    plt.axis('off')
+
+plt.show()
+
+#model.summary() to print the details of model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Import library
+# import tensorflow as tf → imports TensorFlow for deep learning
+# 🔹 1. Load Dataset
+# (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+# → loads MNIST dataset
+# → x_train = training images
+# → y_train = training labels (0–9)
+# → x_test, y_test = testing data
+# 🔹 2. Data Preprocessing
+# x_train.reshape(-1, 28, 28, 1)
+# → converts images into shape (28×28 with 1 channel)
+# → -1 means automatic number of samples
+# / 255.0
+# → normalizes pixel values from (0–255) → (0–1)
+# same done for x_test
+# 🔹 3. Build CNN Model
+# ➤ Create model
+# model = tf.keras.Sequential([...])
+# → creates a layer-by-layer neural network
+# ➤ First Convolution Layer
+# Conv2D(32, 3, activation='relu', input_shape=(28,28,1))
+# → 32 filters
+# → filter size = 3×3
+# → extracts features like edges
+# → ReLU removes negative values
+# ➤ First Pooling Layer
+# MaxPooling2D()
+# → reduces image size
+# → keeps important features
+# ➤ Second Convolution Layer
+# Conv2D(64, 3, activation='relu')
+# → 64 filters → more complex features
+# ➤ Second Pooling Layer
+# MaxPooling2D()
+# → further reduces size
+# ➤ Flatten Layer
+# Flatten()
+# → converts 2D data → 1D vector
+# ➤ Fully Connected Layer
+# Dense(64, activation='relu')
+# → learns patterns
+# ➤ Output Layer
+# Dense(10, activation='softmax')
+# → 10 neurons (digits 0–9)
+# → softmax gives probability for each class
+# 🔹 4. Compile Model
+# model.compile(...) → prepares model
+# optimizer='adam'
+# → adjusts weights efficiently
+# loss='sparse_categorical_crossentropy'
+# → used for multi-class classification
+# metrics=['accuracy']
+# → tracks performance
+# 🔹 5. Train Model
+# model.fit(...)
+# → trains model using training data
+# epochs=1
+# → runs training once
+# validation_data=(x_test, y_test)
+# → checks performance on test data
+# verbose=0
+# → hides training output
+# 🔹 6. Evaluate Model
+# model.evaluate(x_test, y_test)
+# → calculates final accuracy and loss on test data
+# 🔹 7. Output Results
+# ➤ Print summary
+# prints training accuracy, loss
+# prints validation accuracy, loss
+# ➤ Print test results
+# test_acc → how correct model is
+# test_loss → error value
+
+#it tensorflow is not present in the anaconda
+#!pip install "numpy<2"
+#!pip install --upgrade scipy
+#import tensorflow as tf
+#print(tf.__version__)
+
+#!pip install tensorflow
