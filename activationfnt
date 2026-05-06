@@ -1,0 +1,111 @@
+import numpy as np 
+import matplotlib.pyplot as pyp 
+
+def sigmoid(X):
+    return (1/(1+np.exp(-X)))
+def tanh(X):
+    return np.tanh(X)
+def relu(X):
+    return np.maximum(0,X)
+x=np.linspace(-10,10,20)
+y=sigmoid(x)
+y1=tanh(x)
+y2=relu(x)
+
+pyp.figure(figsize=(15,10))
+pyp.title("activation function ",color="red",fontsize=20)
+
+pyp.subplot(2,2,1)
+pyp.plot(x,y,label="sigmoid",color="red",linestyle="--")
+pyp.scatter(x,y) 
+pyp.xlabel("input")
+pyp.ylabel("output")
+pyp.legend()
+pyp.grid()
+
+pyp.subplot(2,2,2)
+pyp.plot(x,y1,label="sigmoid",color="red",linestyle="--")
+pyp.scatter(x,y1) 
+pyp.xlabel("input")
+pyp.ylabel("output")
+pyp.legend()
+pyp.grid()
+
+pyp.subplot(2,2,3)
+pyp.plot(x,y2,label="sigmoid",color="red",linestyle="--",marker="*")
+pyp.xlabel("input")
+pyp.ylabel("output")
+pyp.legend()
+pyp.grid()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import numpy as np
+Imports NumPy for calculations.
+import matplotlib.pyplot as pyp
+Imports plotting library.
+🔹 Activation Functions
+def sigmoid(X):
+    return (1/(1+np.exp(-X)))
+Defines Sigmoid function → output between 0 and 1.
+def tanh(X):
+    return np.tanh(X)
+Defines Tanh function → output between -1 and 1.
+def relu(X):
+    return np.maximum(0,X)
+Defines ReLU → negative = 0, positive stays same.
+🔹 Input Values
+x=np.linspace(-10,10,20)
+Generates 20 values from -10 to 10.
+y=sigmoid(x)
+y1=tanh(x)
+y2=relu(x)
+Applies all 3 functions on input.
+🔹 Plot Setup
+pyp.figure(figsize=(15,10))
+Creates figure (large size).
+pyp.title("activation function ",color="red",fontsize=20)
+Adds title.
+🔹 Sigmoid Plot
+pyp.subplot(2,2,1)
+First graph position.
+pyp.plot(x,y,label="sigmoid",color="red",linestyle="--")
+pyp.scatter(x,y)
+Line + points for sigmoid.
+pyp.xlabel("input")
+pyp.ylabel("output")
+pyp.legend()
+pyp.grid()
+Labels + legend + grid.
+🔹 Tanh Plot
+pyp.subplot(2,2,2)
+Second graph.
+pyp.plot(x,y1,label="sigmoid",...)
+Plots tanh (label mistake → should be "tanh").
+🔹 ReLU Plot
+pyp.subplot(2,2,3)
+Third graph.
+pyp.plot(x,y2,label="sigmoid",...)
+Plots ReLU (label mistake → should be "relu").
