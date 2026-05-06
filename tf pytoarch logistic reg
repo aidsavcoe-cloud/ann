@@ -113,3 +113,11 @@ for i in range(4):
 
 # prob = predictions[i][0] → gets probability value
 # result = "PASS" if prob >= 0.5 else "FAIL" → decision rule
+
+#to install tensorflow if not present in anaconda
+#!pip install "numpy<2"
+#!pip install --upgrade scipy
+#import tensorflow as tf
+#print(tf.__version__)
+
+#!pip install tensorflow
