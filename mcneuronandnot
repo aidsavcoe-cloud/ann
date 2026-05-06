@@ -1,0 +1,114 @@
+import numpy as np
+
+def mp_neuron(x, w, theta):
+    net_input = np.dot(x, w)
+    if net_input >= theta:
+        return 1
+    else:
+        return 0
+
+def and_not():
+    w = np.array([1, -1])
+    theta = 1
+
+    x = np.array([
+        [0,0],
+        [0,1],
+        [1,0],
+        [1,1]
+    ])
+
+    print("X1 X2 Y")
+    print("-------------------")
+
+    for i in x:
+        y = mp_neuron(i, w, theta)
+        print(i[0], i[1], y)
+
+and_not()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import numpy as np
+Imports NumPy library.
+np is a short name used to call NumPy functions.
+Used here for arrays and mathematical operations.
+🔹 Define MP Neuron Function
+def mp_neuron(x, w, theta):
+Defines a function called mp_neuron (McCulloch-Pitts neuron).
+Parameters:
+x → input vector
+w → weight vector
+theta → threshold
+    net_input = np.dot(x, w)
+Calculates dot product of input and weights.
+Formula:
+net_input = x1*w1 + x2*w2
+Example:
+If x = [1,0] and w = [1,-1]
+→ net_input = (1×1) + (0×-1) = 1
+    if net_input >= theta:
+        return 1
+If computed value is greater than or equal to threshold
+Output is 1 (True)
+    else:
+        return 0
+Otherwise output is 0 (False)
+🔹 Define AND-NOT Function
+def and_not():
+Defines a function to implement AND-NOT logic gate
+    w = np.array([1, -1])
+Weight vector:
+w1 = 1 (for X1)
+w2 = -1 (for X2)
+Meaning:
+X1 contributes positively
+X2 subtracts (NOT effect)
+    theta = 1
+Threshold value = 1
+Output becomes 1 only if result ≥ 1
+    x = np.array([
+        [0,0],
+        [0,1],
+        [1,0],
+        [1,1]
+    ])
+Input combinations (truth table):
+[0,0]
+[0,1]
+[1,0]
+[1,1]
+    print("X1 X2 Y")
+    print("-------------------")
+Prints table header
+    for i in x:
+Loop through each input row
+i takes values like [0,0], [0,1], etc.
+        y = mp_neuron(i, w, theta)
+Calls neuron function
+Calculates output y for each input
+        print(i[0], i[1], y)
+Prints:
+i[0] → X1
+i[1] → X2
+y → output
+🔹 Function Call
+and_not()
+Executes the program
